@@ -1,0 +1,79 @@
+#Use this to document and keep track of all classes, methods, etc.
+#Format is as follows:
+#  class: Class Name
+#  methods:
+#     method1
+#     method2
+#     ...
+
+class: Background
+methods:
+    __init__
+
+class: MinerNotFull
+methods:
+    __init__
+   
+class: MinerFull
+methods:
+    __init__
+   
+class: Vein
+methods:
+    __init__
+
+class: Ore
+methods:
+    __init__
+   
+class: Blacksmith
+methods:
+    __init__
+   
+class: Obstacle
+methods:
+    __init__
+   
+class: OreBlob
+methods:
+    __init__
+	
+class: Quake
+methods:
+    __init__
+	
+class: Grid
+methods:
+    __init__
+	
+class: OrderedList
+methods:
+    __init__
+	insert(item, ord)
+	remove(item)
+	head()
+	pop()
+	
+class: ListItem
+methods:
+    __init__
+	__eq__
+	
+class: Point
+methods:
+    __init__
+	
+class: WorldModel
+methods:
+    __init__
+	
+class: WorldView
+methods:
+    __init__
+	
+	
+	
+	
+	
+	
+	
