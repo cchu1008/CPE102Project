@@ -93,7 +93,7 @@ class WorldModel:
          
    def get_tile_occupant(self, pt):
       if self.within_bounds(pt):
-         return self.background.get_cell(pt)
+         return self.occupancy.get_cell(pt)
          
    def get_entities(self):
       return self.entities
