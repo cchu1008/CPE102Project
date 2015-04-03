@@ -13,22 +13,40 @@ methods:
 class: MinerNotFull
 methods:
    __init__
+   get_rate
+   set_resource_count
+   get_resource_count
+   get_resource_limit
+   get_animation_rate
    
 class: MinerFull
 methods:
    __init__
+   get_rate
+   set_resource_count
+   get_resource_count
+   get_resource_limit
+   get_animation_rate
    
 class: Vein
 methods:
    __init__
+   get_rate
+   get_resource_distance
 
 class: Ore
 methods:
    __init__
+   get_rate
    
 class: Blacksmith
 methods:
    __init__
+   get_rate
+   set_resource_count
+   get_resource_count
+   get_resource_limit
+   get_resource_distance
    
 class: Obstacle
 methods:
@@ -37,15 +55,19 @@ methods:
 class: OreBlob
 methods:
    __init__
+   get_rate
+   get_animation_rate
    
 class: Quake
 methods:
    __init__
+   get_animation_rate
    
 class: Grid
 methods:
    __init__
-   
+   set_cell
+   get_cell
    
 class: OrderedList
 methods:
