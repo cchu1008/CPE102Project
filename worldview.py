@@ -134,10 +134,5 @@ class WorldView:
 
       return pygame.Rect(new_x, new_y, self.viewport.width, self.viewport.height)
 
-
-
-
-
-
 def clamp(v, low, high):
    return min(high, max(v, low))
