@@ -28,7 +28,7 @@ class WorldModel:
       oftype = [(e, distance_sq(pt, entities.get_position(e)))
          for e in self.entities if isinstance(e, type)]
          
-         return nearest_entity(oftype)
+      return nearest_entity(oftype)
 
    def add_entity(self, entity):
       pt = entities.get_position(entity)
