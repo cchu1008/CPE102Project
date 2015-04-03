@@ -18,22 +18,6 @@ class MinerNotFull:
       self.resource_count = 0
       self.animation_rate = animation_rate
       self.pending_actions = []
-         
-   def get_rate(self):
-      return self.rate
-      
-   def set_resource_count(self, n):
-      self.resource_count = n
-
-   def get_resource_count(self):
-      return self.resource_count
-      
-   def get_resource_limit(self):
-      return self.resource_limit
-      
-   def get_animation_rate(self):
-      return self.animation_rate
-
 
 class MinerFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
@@ -47,22 +31,6 @@ class MinerFull:
       self.resource_count = resource_limit
       self.animation_rate = animation_rate
       self.pending_actions = []
-      
-   def get_rate(self):
-      return self.rate
-      
-   def set_resource_count(self, n):
-      self.resource_count = n
-
-   def get_resource_count(self):
-      return self.resource_count
-      
-   def get_resource_limit(self):
-      return self.resource_limit
-      
-   def get_animation_rate(self):
-      return self.animation_rate
-
 
 class Vein:
    def __init__(self, name, rate, position, imgs, resource_distance=1):
@@ -73,12 +41,6 @@ class Vein:
       self.current_img = 0
       self.resource_distance = resource_distance
       self.pending_actions = []
-      
-   def get_rate(self):
-      return self.rate
-      
-   def get_resource_distance(self):
-      return self.resource_distance
 
 class Ore:
    def __init__(self, name, position, imgs, rate=5000):
@@ -88,9 +50,6 @@ class Ore:
       self.current_img = 0
       self.rate = rate
       self.pending_actions = []
-      
-   def get_rate(self):
-      return self.rate
       
 class Blacksmith:
    def __init__(self, name, position, imgs, resource_limit, rate,
@@ -104,21 +63,6 @@ class Blacksmith:
       self.rate = rate
       self.resource_distance = resource_distance
       self.pending_actions = []
-      
-   def get_rate(self):
-      return self.rate
-      
-   def set_resource_count(self, n):
-      self.resource_count = n
-
-   def get_resource_count(self):
-      return self.resource_count
-      
-   def get_resource_limit(self):
-      return self.resource_limit
-      
-   def get_resource_distance(self):
-      return self.resource_distance
 
 class Obstacle:
    def __init__(self, name, position, imgs):
@@ -136,13 +80,6 @@ class OreBlob:
       self.current_img = 0
       self.animation_rate = animation_rate
       self.pending_actions = []
-      
-   def get_rate(self):
-      return self.rate
-      
-   def get_animation_rate(self):
-      return self.animation_rate
-
 
 class Quake:
    def __init__(self, name, position, imgs, animation_rate):
@@ -153,9 +90,24 @@ class Quake:
       self.animation_rate = animation_rate
       self.pending_actions = []
 
-   def get_animation_rate(self):
-      return self.animation_rate
+def get_resource_distance(entity):
+   return entity.resource_distance
+
+def get_animation_rate(entity):
+   return entity.animation_rate
       
+def get_resource_count(entity):
+   return entity.resource_count
+   
+def get_resource_limit(entity):
+   return entity.resource_limit
+      
+def set_resource_count(entity, n):
+   entity.resource_count = n
+
+def get_rate(entity):
+   return entity.rate
+   
 def get_name(entity):
    return entity.name
 
