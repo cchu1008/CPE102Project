@@ -52,7 +52,7 @@ class MinerNotFull:
 
          new_entity = self
          if found:
-            new_entity = actions.try_transform_miner(world, self,
+            new_entity = try_transform_miner(world, self,
                try_transform_miner_not_full)
 
          actions.schedule_action(world, new_entity,
@@ -102,7 +102,7 @@ class MinerFull:
 
          new_entity = self
          if found:
-            new_entity = actions.try_transform_miner(world, self,
+            new_entity = try_transform_miner(world, self,
                try_transform_miner_full)
 
          actions.schedule_action(world, new_entity,
@@ -229,9 +229,9 @@ class OreBlob:
          remove_entity(world, vein)
          return ([vein_pt], True)
       else:
-         new_pt = blob_next_position(world, entity_pt, vein_pt)
+         new_pt = self.blob_next_position(world, vein_pt)
          old_entity = world.get_tile_occupant(new_pt)
-         if isinstance(old_entity, entities.Ore):
+         if isinstance(old_entity, Ore):
             remove_entity(world, old_entity)
          return (world.move_entity(self, new_pt), False)
          
@@ -355,3 +355,13 @@ def sign(x):
       return 1
    else:
       return 0
+
+def try_transform_miner(world, entity, transform):
+   new_entity = transform(world, entity)
+   if entity != new_entity:
+      actions.clear_pending_actions(world, entity)
+      world.remove_entity_at(get_position(entity))
+      world.add_entity(new_entity)
+      actions.schedule_animation(world, new_entity)
+
+   return new_entity

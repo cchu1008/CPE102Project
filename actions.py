@@ -57,16 +57,6 @@ def find_open_around(world, pt, distance):
    return None
 
 
-def try_transform_miner(world, entity, transform):
-   new_entity = transform(world, entity)
-   if entity != new_entity:
-      clear_pending_actions(world, entity)
-      world.remove_entity_at(entities.get_position(entity))
-      world.add_entity(new_entity)
-      schedule_animation(world, new_entity)
-
-   return new_entity
-
 
 def create_miner_action(world, entity, image_store):
    if isinstance(entity, entities.MinerNotFull):
