@@ -62,25 +62,6 @@ def find_open_around(world, pt, distance):
 
    return None
 
-def try_transform_miner_full(world, entity):
-   new_entity = entities.MinerNotFull(
-      entities.get_name(entity), entities.get_resource_limit(entity),
-      entities.get_position(entity), entities.get_rate(entity),
-      entities.get_images(entity), entities.get_animation_rate(entity))
-
-   return new_entity
-
-
-def try_transform_miner_not_full(world, entity):
-   if entity.resource_count < entity.resource_limit:
-      return entity
-   else:
-      new_entity = entities.MinerFull(
-         entities.get_name(entity), entities.get_resource_limit(entity),
-         entities.get_position(entity), entities.get_rate(entity),
-         entities.get_images(entity), entities.get_animation_rate(entity))
-      return new_entity
-
 
 def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
@@ -95,9 +76,9 @@ def try_transform_miner(world, entity, transform):
 
 def create_miner_action(world, entity, image_store):
    if isinstance(entity, entities.MinerNotFull):
-      return create_miner_not_full_action(world, entity, image_store)
+      return entity.create_miner_not_full_action(world, image_store)
    else:
-      return create_miner_full_action(world, entity, image_store)
+      return entity.create_miner_full_action(world, image_store)
 
 
 def create_animation_action(world, entity, repeat_count):
@@ -156,7 +137,7 @@ def create_blob(world, name, pt, rate, ticks, i_store):
 
 
 def schedule_blob(world, blob, ticks, i_store):
-   schedule_action(world, blob, create_ore_blob_action(world, blob, i_store),
+   schedule_action(world, blob, blob.create_ore_blob_action(world, i_store),
       ticks + entities.get_rate(blob))
    schedule_animation(world, blob)
 
@@ -202,7 +183,7 @@ def create_vein(world, name, pt, ticks, i_store):
 
 
 def schedule_vein(world, vein, ticks, i_store):
-   schedule_action(world, vein, create_vein_action(world, vein, i_store),
+   schedule_action(world, vein, vein.create_vein_action(world, i_store),
       ticks + entities.get_rate(vein))
 
 
