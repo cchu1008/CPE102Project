@@ -33,7 +33,7 @@ class MinerNotFull:
       if not ore:
          return ([entity_pt], False)
       ore_pt = get_position(ore)
-      if actions.adjacent(entity_pt, ore_pt):
+      if adjacent(entity_pt, ore_pt):
          set_resource_count(self, 
             1 + self.resource_count)
          actions.remove_entity(world, ore)
@@ -82,7 +82,7 @@ class MinerFull:
       if not smith:
          return ([entity_pt], False)
       smith_pt = get_position(smith)
-      if actions.adjacent(entity_pt, smith_pt):
+      if adjacent(entity_pt, smith_pt):
          set_resource_count(smith, 
             get_resource_count(smith) +
             self.resource_count)
@@ -343,3 +343,15 @@ def clear_pending_actions(entity):
 
 def next_image(entity):
    entity.current_img = (entity.current_img + 1) % len(entity.imgs)
+
+def adjacent(pt1, pt2):
+   return ((pt1.x == pt2.x and abs(pt1.y - pt2.y) == 1) or
+      (pt1.y == pt2.y and abs(pt1.x - pt2.x) == 1))
+
+def sign(x):
+   if x < 0:
+      return -1
+   elif x > 0:
+      return 1
+   else:
+      return 0
