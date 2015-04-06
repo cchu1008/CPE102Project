@@ -9,59 +9,55 @@
 class: Background
 methods:
    __init__
+   entity_string
 
 class: MinerNotFull
 methods:
    __init__
-   get_rate
-   set_resource_count
-   get_resource_count
-   get_resource_limit
-   get_animation_rate
+   entity_string
+   miner_to_ore
+   create_miner_not_full_action
    
 class: MinerFull
 methods:
    __init__
-   get_rate
-   set_resource_count
-   get_resource_count
-   get_resource_limit
-   get_animation_rate
-   
+   entity_string
+   miner_to_smith
+   create_miner_full_action
+
 class: Vein
 methods:
    __init__
-   get_rate
-   get_resource_distance
+   entity_string
+   create_vein_action
 
 class: Ore
 methods:
    __init__
-   get_rate
+   entity_string
    
 class: Blacksmith
 methods:
    __init__
-   get_rate
-   set_resource_count
-   get_resource_count
-   get_resource_limit
-   get_resource_distance
+   entity_string
    
 class: Obstacle
 methods:
    __init__
+   entity_string
    
 class: OreBlob
 methods:
    __init__
-   get_rate
-   get_animation_rate
-   
+   entity_string
+   blob_next_position
+   blob_to_vein
+   create_ore_blob_action
+
 class: Quake
 methods:
    __init__
-   get_animation_rate
+   entity_string
    
 class: Grid
 methods:
