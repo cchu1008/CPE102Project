@@ -250,7 +250,7 @@ class OreBlob:
             next_time = current_ticks + self.rate * 2
 
          actions.schedule_action(world, self,
-            create_ore_blob_action(world, i_store),
+            actions.create_ore_blob_action(world, i_store),
             next_time)
 
          return tiles
