@@ -52,4 +52,3 @@ def activity_loop(view, world):
             handle_mouse_motion(view, event)
          elif event.type == pygame.KEYDOWN:
             handle_keydown(view, event)
-

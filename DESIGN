@@ -117,12 +117,13 @@ methods:
    update_mouse_cursor
    mouse_move
    
+   
 Unmoved Functions (By File & [Why Left Alone]):
 main.py--
 
-REMAINING:
-create_default_background []
-load_world []
+"No logical class to associate to/integral part of main function.":
+create_default_background
+load_world
 
 worldmodel.py--
 
@@ -192,22 +193,26 @@ schedule_vein []
 
 builder.py--
 
-REMAINING:
-create_default_background []
+"Used to 'build' the world":
+create_default_background
 
 builder_controller.py--
 
 REMAINING:
-mouse_to_tile []
 save_world []
 load_world []
-on_keydown []
-handle_mouse_motion []
-handle_keydown []
 create_new_entity []
 is_background_tile []
-handle_mouse_button []
-activity_loop []
+
+"No logical class to associate to/controls what to do with key presses, mouse-movement, etc.":
+mouse_to_tile
+handle_mouse_button
+handle_mouse_motion
+handle_keydown
+on_keydown
+
+"No logical class to associate to/used as part of pygame setup":
+activity_loop
 
 controller.py--
 
@@ -217,6 +222,8 @@ mouse_to_tile
 handle_timer_event
 handle_mouse_motion
 handle_keydown
+
+"No logical class to associate to/used as part of pygame setup":
 activity_loop
 
 image_store.py--
