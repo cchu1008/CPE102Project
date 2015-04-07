@@ -131,7 +131,7 @@ class Vein:
       def action(current_ticks):
          remove_pending_action(self, action)
 
-         open_pt = actions.find_open_around(world, self.position,
+         open_pt = find_open_around(world, self.position,
             self.resource_distance)
          if open_pt:
             ore = actions.create_ore(world,
@@ -379,3 +379,15 @@ def next_position(world, entity_pt, dest_pt):
          new_pt = point.Point(entity_pt.x, entity_pt.y)
 
    return new_pt
+   
+   
+def find_open_around(world, pt, distance):
+   for dy in range(-distance, distance + 1):
+      for dx in range(-distance, distance + 1):
+         new_pt = point.Point(pt.x + dx, pt.y + dy)
+
+         if (world.within_bounds(new_pt) and
+            (not world.is_occupied(new_pt))):
+            return new_pt
+
+   return None

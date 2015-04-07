@@ -23,17 +23,6 @@ VEIN_RATE_MIN = 8000
 VEIN_RATE_MAX = 17000
 
 
-def find_open_around(world, pt, distance):
-   for dy in range(-distance, distance + 1):
-      for dx in range(-distance, distance + 1):
-         new_pt = point.Point(pt.x + dx, pt.y + dy)
-
-         if (world.within_bounds(new_pt) and
-            (not world.is_occupied(new_pt))):
-            return new_pt
-
-   return None
-
 
 
 def create_miner_action(world, entity, image_store):
