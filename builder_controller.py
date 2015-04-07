@@ -138,4 +138,3 @@ def activity_loop(view, world, i_store):
          elif event.type == pygame.KEYDOWN:
             entity_select = handle_keydown(view, event, i_store, world,
                entity_select)
-
