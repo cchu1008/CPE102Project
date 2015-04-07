@@ -23,28 +23,6 @@ VEIN_RATE_MIN = 8000
 VEIN_RATE_MAX = 17000
 
 
-def sign(x):
-   if x < 0:
-      return -1
-   elif x > 0:
-      return 1
-   else:
-      return 0
-
-def next_position(world, entity_pt, dest_pt):
-   horiz = sign(dest_pt.x - entity_pt.x)
-   new_pt = point.Point(entity_pt.x + horiz, entity_pt.y)
-
-   if horiz == 0 or world.is_occupied(new_pt):
-      vert = sign(dest_pt.y - entity_pt.y)
-      new_pt = point.Point(entity_pt.x, entity_pt.y + vert)
-
-      if vert == 0 or world.is_occupied(new_pt):
-         new_pt = point.Point(entity_pt.x, entity_pt.y)
-
-   return new_pt
-
-
 def find_open_around(world, pt, distance):
    for dy in range(-distance, distance + 1):
       for dx in range(-distance, distance + 1):

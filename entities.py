@@ -39,7 +39,7 @@ class MinerNotFull:
          actions.remove_entity(world, ore)
          return ([ore_pt], True)
       else:
-         new_pt = actions.next_position(world, entity_pt, ore_pt)
+         new_pt = next_position(world, entity_pt, ore_pt)
          return (world.move_entity(self, new_pt), False)
          
    def create_miner_not_full_action(self, world, i_store):
@@ -89,7 +89,7 @@ class MinerFull:
          self.resource_count = 0
          return ([], True)
       else:
-         new_pt = actions.next_position(world, entity_pt, smith_pt)
+         new_pt = next_position(world, entity_pt, smith_pt)
          return (world.move_entity(self, new_pt), False)
          
    def create_miner_full_action(self, world, i_store):
@@ -365,3 +365,17 @@ def try_transform_miner(world, entity, transform):
       actions.schedule_animation(world, new_entity)
 
    return new_entity
+
+
+def next_position(world, entity_pt, dest_pt):
+   horiz = sign(dest_pt.x - entity_pt.x)
+   new_pt = point.Point(entity_pt.x + horiz, entity_pt.y)
+
+   if horiz == 0 or world.is_occupied(new_pt):
+      vert = sign(dest_pt.y - entity_pt.y)
+      new_pt = point.Point(entity_pt.x, entity_pt.y + vert)
+
+      if vert == 0 or world.is_occupied(new_pt):
+         new_pt = point.Point(entity_pt.x, entity_pt.y)
+
+   return new_pt
