@@ -56,10 +56,14 @@ class MinerNotFull:
                try_transform_miner_not_full)
 
          actions.schedule_action(world, new_entity,
-            actions.create_miner_action(world, new_entity, i_store),
+            new_entity.create_miner_action(world, i_store),
             current_ticks + get_rate(new_entity))
          return tiles
       return action
+      
+   def create_miner_action(self, world, image_store):
+      return self.create_miner_not_full_action(world, image_store)
+
       
 class MinerFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
@@ -106,10 +110,14 @@ class MinerFull:
                try_transform_miner_full)
 
          actions.schedule_action(world, new_entity,
-            actions.create_miner_action(world, new_entity, i_store),
+            new_entity.create_miner_action(world, i_store),
             current_ticks + get_rate(new_entity))
          return tiles
       return action
+      
+   def create_miner_action(self, world, image_store):
+      return self.create_miner_full_action(world, image_store)
+
 
 class Vein:
    def __init__(self, name, rate, position, imgs, resource_distance=1):

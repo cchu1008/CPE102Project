@@ -22,16 +22,6 @@ VEIN_SPAWN_DELAY = 500
 VEIN_RATE_MIN = 8000
 VEIN_RATE_MAX = 17000
 
-
-
-
-def create_miner_action(world, entity, image_store):
-   if isinstance(entity, entities.MinerNotFull):
-      return entity.create_miner_not_full_action(world, image_store)
-   else:
-      return entity.create_miner_full_action(world, image_store)
-
-
 def create_animation_action(world, entity, repeat_count):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
@@ -94,7 +84,7 @@ def schedule_blob(world, blob, ticks, i_store):
 
 
 def schedule_miner(world, miner, ticks, i_store):
-   schedule_action(world, miner, create_miner_action(world, miner, i_store),
+   schedule_action(world, miner, miner.create_miner_action(world, i_store),
       ticks + entities.get_rate(miner))
    schedule_animation(world, miner)
 
