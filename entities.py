@@ -226,13 +226,13 @@ class OreBlob:
          return ([entity_pt], False)
       vein_pt = get_position(vein)
       if adjacent(entity_pt, vein_pt):
-         remove_entity(world, vein)
+         actions.remove_entity(world, vein)
          return ([vein_pt], True)
       else:
          new_pt = self.blob_next_position(world, vein_pt)
          old_entity = world.get_tile_occupant(new_pt)
          if isinstance(old_entity, Ore):
-            remove_entity(world, old_entity)
+            actions.remove_entity(world, old_entity)
          return (world.move_entity(self, new_pt), False)
          
    def create_ore_blob_action(self, world, i_store):
@@ -245,12 +245,12 @@ class OreBlob:
 
          next_time = current_ticks + self.rate
          if found:
-            quake = create_quake(world, tiles[0], current_ticks, i_store)
+            quake = actions.create_quake(world, tiles[0], current_ticks, i_store)
             world.add_entity(quake)
             next_time = current_ticks + self.rate * 2
 
          actions.schedule_action(world, self,
-            actions.create_ore_blob_action(world, i_store),
+            self.create_ore_blob_action(world, i_store),
             next_time)
 
          return tiles
