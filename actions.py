@@ -62,7 +62,7 @@ def create_ore_transform_action(world, entity, i_store):
 
 
 def remove_entity(world, entity):
-   Entities.clear_pending_actions(world, entity)
+   entities.clear_pending_actions(world, entity)
    world.remove_entity(entity)
 
 
