@@ -125,20 +125,24 @@ main.py--
 create_default_background
 load_world
 
+
+
 worldmodel.py--
 
-"Does not pertain to an individual world":
+"Helper functions that remain static for all World objects":
 nearest_entity
 distane_sq
 
+
+
 entities.py--
 
-REMAINING:
-try_transform_miner_full []
-try_transform_miner_not_full []
-try_transform_miner []
+"Helper functions for both MinerNotFull and MinerFull, so they don't fit in either.":
+try_transform_miner_full
+try_transform_miner_not_full
+try_transform_miner
 
-"It's used by several classes":
+"These are accessors and a mutator used by several classes":
 get_resource_distance
 get_animation_rate
 get_resource_count
@@ -150,23 +154,23 @@ get_image
 set_position
 get_position
 
-"It's used on several classes":
+"These are used on several classes":
 remove_pending_action
 add_pending_action
 get_pending_actions
 clear_pending_actions
 
-"It's used by every class":
+"This is used by every class":
 get_name
 
-"It does not pertain to a specific class":
+"These are helper functions and don't pertain to a specific class":
 next_image
 sign
 next_position
 find_open_around
-
-"It's used by several classes":
 adjacent
+
+
 
 actions.py--
 
@@ -179,16 +183,19 @@ schedule_action
 schedule_animation
 clear_pending_actions
 
-REMAINING:
-create_blob []
-schedule_blob []
-schedule_miner []
-create_ore []
-schedule_ore []
-create_quake []
-schedule_quake []
-create_vein []
-schedule_vein []
+"These create their respective objects using constants defined in Actions, then schedule their objects.":
+create_blob
+create_ore
+create_quake
+create_vein
+
+"These schedule their respective objects using functions defined in Actions.":
+schedule_blob
+schedule_miner
+schedule_ore
+schedule_quake
+schedule_vein
+
 
 
 builder.py--
@@ -196,13 +203,15 @@ builder.py--
 "Used to 'build' the world":
 create_default_background
 
+
+
 builder_controller.py--
 
-REMAINING:
-save_world []
-load_world []
-create_new_entity []
-is_background_tile []
+"These were left as they are since they deal with the world builder and not the world simulator":
+save_world
+load_world
+create_new_entity
+is_background_tile
 
 "No logical class to associate to/controls what to do with key presses, mouse-movement, etc.":
 mouse_to_tile
@@ -213,6 +222,8 @@ on_keydown
 
 "No logical class to associate to/used as part of pygame setup":
 activity_loop
+
+
 
 controller.py--
 
@@ -226,6 +237,8 @@ handle_keydown
 "No logical class to associate to/used as part of pygame setup":
 activity_loop
 
+
+
 image_store.py--
 
 "Deals only with images":
@@ -235,14 +248,18 @@ process_image_line
 get_images_internal
 get_images
 
+
+
 worldview.py--
 
-REMAINING:
-clamp []
+"Helper function":
+clamp
+
+
 
 save_load.py--
 
-"Deals only with loading and saving world":
+"Deals only with loading and saving world and shouldn't be touched for fear of spontaneous code combustion":
 save_world
 save_entities
 save_background
