@@ -34,8 +34,7 @@ class MinerNotFull:
          return ([entity_pt], False)
       ore_pt = get_position(ore)
       if adjacent(entity_pt, ore_pt):
-         set_resource_count(self, 
-            1 + self.resource_count)
+         set_resource_count(self, 1 + self.resource_count)
          actions.remove_entity(world, ore)
          return ([ore_pt], True)
       else:
@@ -216,14 +215,12 @@ class OreBlob:
       new_pt = point.Point(self.position.x + horiz, self.position.y)
 
       if horiz == 0 or (world.is_occupied(new_pt) and
-         not isinstance(world.get_tile_occupant(new_pt),
-         Ore)):
+         not isinstance(world.get_tile_occupant(new_pt), Ore)):
          vert = sign(dest_pt.y - self.position.y)
          new_pt = point.Point(self.position.x, self.position.y + vert)
 
          if vert == 0 or (world.is_occupied(new_pt) and
-            not isinstance(world.get_tile_occupant(new_pt),
-            Ore)):
+            not isinstance(world.get_tile_occupant(new_pt), Ore)):
             new_pt = point.Point(self.position.x, self.position.y)
 
       return new_pt
