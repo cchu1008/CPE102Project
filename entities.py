@@ -349,7 +349,7 @@ def clear_entity_pending_actions(entity):
       entity.pending_actions = []
 
 def clear_pending_actions(world, entity):
-   for action in entities.get_pending_actions(entity):
+   for action in get_pending_actions(entity):
       world.unschedule_action(action)
    clear_entity_pending_actions(entity)
 
