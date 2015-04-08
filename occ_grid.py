@@ -22,4 +22,3 @@ class Grid:
 
    def get_cell(self, point):
       return self.cells[point.y][point.x]
-

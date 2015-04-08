@@ -135,4 +135,3 @@ def schedule_animation(world, entity, repeat_count=0):
    schedule_action(world, entity,
       create_animation_action(world, entity, repeat_count),
       entities.get_animation_rate(entity))
-
