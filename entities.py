@@ -344,9 +344,14 @@ def get_pending_actions(entity):
    else:
       return []
 
-def clear_pending_actions(entity):
+def clear_entity_pending_actions(entity):
    if hasattr(entity, "pending_actions"):
       entity.pending_actions = []
+
+def clear_pending_actions(world, entity):
+   for action in entities.get_pending_actions(entity):
+      world.unschedule_action(action)
+   clear_entity_pending_actions(entity)
 
 
 def next_image(entity):
@@ -367,7 +372,7 @@ def sign(x):
 def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
    if entity != new_entity:
-      actions.clear_pending_actions(world, entity)
+      clear_pending_actions(world, entity)
       world.remove_entity_at(get_position(entity))
       world.add_entity(new_entity)
       actions.schedule_animation(world, new_entity)

@@ -35,7 +35,7 @@ class WorldModel:
       if self.within_bounds(pt):
          old_entity = self.occupancy.get_cell(pt)
          if old_entity != None:
-            entities.clear_pending_actions(old_entity)
+            entities.clear_entity_pending_actions(old_entity)
          self.occupancy.set_cell(pt, entity)
          self.entities.append(entity)
 

@@ -62,7 +62,7 @@ def create_ore_transform_action(world, entity, i_store):
 
 
 def remove_entity(world, entity):
-   clear_pending_actions(world, entity)
+   entities.clear_pending_actions(world, entity)
    world.remove_entity(entity)
 
 
@@ -136,8 +136,3 @@ def schedule_animation(world, entity, repeat_count=0):
       create_animation_action(world, entity, repeat_count),
       entities.get_animation_rate(entity))
 
-
-def clear_pending_actions(world, entity):
-   for action in entities.get_pending_actions(entity):
-      world.unschedule_action(action)
-   entities.clear_pending_actions(entity)
