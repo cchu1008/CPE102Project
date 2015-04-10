@@ -81,7 +81,7 @@ class WorldModel:
       
    def get_background_image(self, pt):
       if self.within_bounds(pt):
-         return self.background.get_cell(pt).getimage()
+         return self.background.get_cell(pt).get_image()
       
    def get_background(self, pt):
       if self.within_bounds(pt):
