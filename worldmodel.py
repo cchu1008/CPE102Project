@@ -25,40 +25,40 @@ class WorldModel:
          self.occupancy.get_cell(pt) != None)
          
    def find_nearest(self, pt, type):
-      oftype = [(e, distance_sq(pt, entities.get_position(e)))
+      oftype = [(e, distance_sq(pt, e.get_position()))
          for e in self.entities if isinstance(e, type)]
          
       return nearest_entity(oftype)
 
    def add_entity(self, entity):
-      pt = entities.get_position(entity)
+      pt = entity.get_position()
       if self.within_bounds(pt):
          old_entity = self.occupancy.get_cell(pt)
          if old_entity != None:
-            entities.clear_entity_pending_actions(old_entity)
+            old_entity.clear_entity_pending_actions()
          self.occupancy.set_cell(pt, entity)
          self.entities.append(entity)
 
    def move_entity(self, entity, pt):
       tiles = []
       if self.within_bounds(pt):
-         old_pt = entities.get_position(entity)
+         old_pt = entity.get_position()
          self.occupancy.set_cell(old_pt, None)
          tiles.append(old_pt)
          self.occupancy.set_cell(pt, entity)
          tiles.append(pt)
-         entities.set_position(entity, pt)
+         entity.set_position(pt)
 
       return tiles
       
    def remove_entity(self, entity):
-      self.remove_entity_at(entities.get_position(entity))
+      self.remove_entity_at(entity.get_position())
 
    def remove_entity_at(self, pt):
       if (self.within_bounds(pt) and
          self.occupancy.get_cell(pt) != None):
          entity = self.occupancy.get_cell(pt)
-         entities.set_position(entity, point.Point(-1, -1))
+         entity.set_position(point.Point(-1, -1))
          self.entities.remove(entity)
          self.occupancy.set_cell(pt, None)
 
@@ -81,7 +81,7 @@ class WorldModel:
       
    def get_background_image(self, pt):
       if self.within_bounds(pt):
-         return entities.get_image(self.background.get_cell(pt))
+         return self.background.get_cell(pt).getimage()
       
    def get_background(self, pt):
       if self.within_bounds(pt):

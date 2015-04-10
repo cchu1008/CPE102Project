@@ -24,23 +24,23 @@ VEIN_RATE_MAX = 17000
 
 def create_animation_action(world, entity, repeat_count):
    def action(current_ticks):
-      entities.remove_pending_action(entity, action)
+      entity.remove_pending_action(action)
 
-      entities.next_image(entity)
+      entity.next_image()
 
       if repeat_count != 1:
          schedule_action(world, entity,
             create_animation_action(world, entity, max(repeat_count - 1, 0)),
-            current_ticks + entities.get_animation_rate(entity))
+            current_ticks + entity.get_animation_rate())
 
-      return [entities.get_position(entity)]
+      return [entity.get_position()]
    return action
 
 
 def create_entity_death_action(world, entity):
    def action(current_ticks):
-      entities.remove_pending_action(entity, action)
-      pt = entities.get_position(entity)
+      entity.remove_pending_action(action)
+      pt = entity.get_position()
       remove_entity(world, entity)
       return [pt]
    return action
@@ -48,21 +48,21 @@ def create_entity_death_action(world, entity):
 
 def create_ore_transform_action(world, entity, i_store):
    def action(current_ticks):
-      entities.remove_pending_action(entity, action)
-      blob = create_blob(world, entities.get_name(entity) + " -- blob",
-         entities.get_position(entity),
-         entities.get_rate(entity) // BLOB_RATE_SCALE,
+      entity.remove_pending_action(action)
+      blob = create_blob(world, entity.get_name() + " -- blob",
+         entity.get_position(),
+         entity.get_rate() // BLOB_RATE_SCALE,
          current_ticks, i_store)
 
       remove_entity(world, entity)
       world.add_entity(blob)
 
-      return [entities.get_position(blob)]
+      return [blob.get_position()]
    return action
 
 
 def remove_entity(world, entity):
-   entities.clear_pending_actions(world, entity)
+   entity.clear_pending_actions(world)
    world.remove_entity(entity)
 
 
@@ -77,13 +77,13 @@ def create_blob(world, name, pt, rate, ticks, i_store):
 
 def schedule_blob(world, blob, ticks, i_store):
    schedule_action(world, blob, blob.create_ore_blob_action(world, i_store),
-      ticks + entities.get_rate(blob))
+      ticks + blob.get_rate())
    schedule_animation(world, blob)
 
 
 def schedule_miner(world, miner, ticks, i_store):
    schedule_action(world, miner, miner.create_miner_action(world, i_store),
-      ticks + entities.get_rate(miner))
+      ticks + miner.get_rate())
    schedule_animation(world, miner)
 
 
@@ -98,7 +98,7 @@ def create_ore(world, name, pt, ticks, i_store):
 def schedule_ore(world, ore, ticks, i_store):
    schedule_action(world, ore,
       create_ore_transform_action(world, ore, i_store),
-      ticks + entities.get_rate(ore))
+      ticks + ore.get_rate())
 
 
 def create_quake(world, pt, ticks, i_store):
@@ -123,15 +123,15 @@ def create_vein(world, name, pt, ticks, i_store):
 
 def schedule_vein(world, vein, ticks, i_store):
    schedule_action(world, vein, vein.create_vein_action(world, i_store),
-      ticks + entities.get_rate(vein))
+      ticks + vein.get_rate())
 
 
 def schedule_action(world, entity, action, time):
-   entities.add_pending_action(entity, action)
+   entity.add_pending_action(action)
    world.schedule_action(action, time)
 
 
 def schedule_animation(world, entity, repeat_count=0):
    schedule_action(world, entity,
       create_animation_action(world, entity, repeat_count),
-      entities.get_animation_rate(entity))
+      entity.get_animation_rate())
