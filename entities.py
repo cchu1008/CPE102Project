@@ -97,7 +97,7 @@ class MinerNotFull:
          return ([entity_pt], False)
       ore_pt = get_position(ore)
       if adjacent(entity_pt, ore_pt):
-         set_resource_count(self, 1 + self.resource_count)
+         self.set_resource_count(1 + self.resource_count)
          actions.remove_entity(world, ore)
          return ([ore_pt], True)
       else:
@@ -211,7 +211,7 @@ class MinerFull:
          
    def create_miner_full_action(self, world, i_store):
       def action(current_ticks):
-         remove_pending_action(self, action)
+         self.remove_pending_action(action)
 
          entity_pt = self.position
          smith = world.find_nearest(entity_pt, Blacksmith)
@@ -291,7 +291,7 @@ class Vein:
          
    def create_vein_action(self, world, i_store):
       def action(current_ticks):
-         remove_pending_action(self, action)
+         self.remove_pending_action(action)
 
          open_pt = find_open_around(world, self.position,
             self.resource_distance)
@@ -547,7 +547,7 @@ class OreBlob:
          
    def create_ore_blob_action(self, world, i_store):
       def action(current_ticks):
-         remove_pending_action(self, action)
+         self.remove_pending_action(action)
 
          entity_pt = self.position
          vein = world.find_nearest(entity_pt, Vein)
