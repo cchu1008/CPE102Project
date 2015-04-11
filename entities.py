@@ -641,7 +641,7 @@ def try_transform_miner_not_full(world, entity):
 def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
    if entity != new_entity:
-      clear_pending_actions(world, entity)
+      entity.clear_pending_actions(world)
       world.remove_entity_at(entity.get_position())
       world.add_entity(new_entity)
       actions.schedule_animation(world, new_entity)
