@@ -95,7 +95,7 @@ class MinerNotFull:
       entity_pt = self.position
       if not ore:
          return ([entity_pt], False)
-      ore_pt = get_position(ore)
+      ore_pt = ore.get_position()
       if adjacent(entity_pt, ore_pt):
          self.set_resource_count(1 + self.resource_count)
          actions.remove_entity(world, ore)
@@ -119,7 +119,7 @@ class MinerNotFull:
 
          actions.schedule_action(world, new_entity,
             new_entity.create_miner_action(world, i_store),
-            current_ticks + get_rate(new_entity))
+            current_ticks + new_entity.get_rate())
          return tiles
       return action
       
@@ -198,10 +198,10 @@ class MinerFull:
       entity_pt = self.position
       if not smith:
          return ([entity_pt], False)
-      smith_pt = get_position(smith)
+      smith_pt = smith.get_position()
       if adjacent(entity_pt, smith_pt):
-         set_resource_count(smith, 
-            get_resource_count(smith) +
+         smith.set_resource_count( 
+            smith.get_resource_count() +
             self.resource_count)
          self.resource_count = 0
          return ([], True)
@@ -224,7 +224,7 @@ class MinerFull:
 
          actions.schedule_action(world, new_entity,
             new_entity.create_miner_action(world, i_store),
-            current_ticks + get_rate(new_entity))
+            current_ticks + new_entity.get_rate())
          return tiles
       return action
       
@@ -534,7 +534,7 @@ class OreBlob:
       entity_pt = self.position
       if not vein:
          return ([entity_pt], False)
-      vein_pt = get_position(vein)
+      vein_pt = vein.get_position()
       if adjacent(entity_pt, vein_pt):
          actions.remove_entity(world, vein)
          return ([vein_pt], True)
@@ -642,7 +642,7 @@ def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
    if entity != new_entity:
       clear_pending_actions(world, entity)
-      world.remove_entity_at(get_position(entity))
+      world.remove_entity_at(entity.get_position())
       world.add_entity(new_entity)
       actions.schedule_animation(world, new_entity)
 
