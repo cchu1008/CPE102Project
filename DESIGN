@@ -264,7 +264,6 @@ creat_ore_transform_action
 remove_entity
 schedule_action
 schedule_animation
-clear_pending_actions
 
 "These create their respective objects using constants defined in Actions, then schedule their objects.":
 create_blob
