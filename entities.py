@@ -48,7 +48,7 @@ class Entity(object):
       self.current_img = (self.current_img + 1) % len(self.imgs)
       
 class Pending_Actions(Entity):
-   def __init__(name, position, imgs):
+   def __init__(self, name, position, imgs):
       super(Pending_Actions, self).__init__(name, position, imgs)
       self.pending_actions = []
       
