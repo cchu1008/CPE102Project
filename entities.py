@@ -29,6 +29,7 @@ class Entity(object):
    def entity_string(self):
       return 'unknown'
 
+
 BACKGROUND_POINT = point.Point(0, 0)
 class Background(Entity):
    def __init__(self, name, imgs):
@@ -36,9 +37,13 @@ class Background(Entity):
 
 
 class Pending_Actions(Entity):
-   def __init__(self, name, position, imgs):
+   def __init__(self, name, position, imgs, rate = 0):
       super(Pending_Actions, self).__init__(name, position, imgs)
       self.pending_actions = []
+      self.rate = rate
+   
+   def get_rate(self):
+      return self.rate
       
    def remove_pending_action(self, action):
       self.pending_actions.remove(action)
@@ -56,36 +61,41 @@ class Pending_Actions(Entity):
       for action in self.get_pending_actions():
          world.unschedule_action(action)
       self.clear_entity_pending_actions()
-      
 
-class Miner(Pending_Actions):
-   def __init__(self, name, resource_limit, position, rate, imgs, animation_rate):
-      super(Miner, self).__init__(name, position, imgs)
-      self.resource_limit = resource_limit
-      self.rate = rate
+class Animated(Pending_Actions):
+   def __init__(self, name, position, imgs, rate, animation_rate):
+      super(Animated, self).__init__(name, position, imgs, rate)
       self.animation_rate = animation_rate
-      
-   def get_rate(self):
-      return self.rate
-      
+   
    def get_animation_rate(self):
       return self.animation_rate
       
+      
+class ResourceHolder(Animated):
+   def __init__(self, name, position, imgs, rate, resource_limit, resource_count = 0, animation_rate = 0):
+      super(ResourceHolder, self).__init__(name, position, imgs, rate, animation_rate)
+      self.resource_limit = resource_limit
+      self.resource_count = resource_count
+   
+   def get_resource_limit(self):
+      return self.resource_limit
+   
    def get_resource_count(self):
       return self.resource_count
-
+   
    def set_resource_count(self, n):
       self.resource_count = n
       
-   def get_resource_limit(self):
-      return self.resource_limit
+      
+
+class Miner(ResourceHolder):
+   def __init__(self, name, resource_limit, resource_count, position, rate, imgs, animation_rate):
+      super(Miner, self).__init__(name, position, imgs, rate, resource_limit, resource_count, animation_rate)
       
 
 class MinerNotFull(Miner):
-   def __init__(self, name, resource_limit, position, rate, imgs,
-      animation_rate):
-      super(MinerNotFull, self).__init__(name, resource_limit, position, rate, imgs, animation_rate)
-      self.resource_count = 0
+   def __init__(self, name, resource_limit, position, rate, imgs, animation_rate):
+      super(MinerNotFull, self).__init__(name, resource_limit, 0, position, rate, imgs, animation_rate)
       
    def entity_string(self):
       return ' '.join(['miner', self.name, str(self.position.x),
@@ -129,10 +139,8 @@ class MinerNotFull(Miner):
 
       
 class MinerFull(Miner):
-   def __init__(self, name, resource_limit, position, rate, imgs,
-      animation_rate):
-      super(MinerFull, self).__init__(name, resource_limit, position, rate, imgs, animation_rate)
-      self.resource_count = 2
+   def __init__(self, name, resource_limit, position, rate, imgs, animation_rate):
+      super(MinerFull, self).__init__(name, resource_limit, 2, position, rate, imgs, animation_rate)
       
    def miner_to_smith(self, world, smith):
       entity_pt = self.position
@@ -174,12 +182,8 @@ class MinerFull(Miner):
 
 class Vein(Pending_Actions):
    def __init__(self, name, rate, position, imgs, resource_distance=1):
-      super(Vein, self).__init__(name, position, imgs)
-      self.rate = rate
+      super(Vein, self).__init__(name, position, imgs, rate)
       self.resource_distance = resource_distance
-
-   def get_rate(self):
-      return self.rate
 
    def get_resource_distance(self):
       return self.resource_distance
@@ -212,39 +216,19 @@ class Vein(Pending_Actions):
       
 class Ore(Pending_Actions):
    def __init__(self, name, position, imgs, rate=5000):
-      super(Ore, self).__init__(name, position, imgs)
-      self.rate = rate
-
-   def get_rate(self):
-      return self.rate
+      super(Ore, self).__init__(name, position, imgs, rate)
 
    def entity_string(self):
       return ' '.join(['ore', self.name, str(self.position.x),
          str(self.position.y), str(self.rate)])
       
-class Blacksmith(Pending_Actions):
-   def __init__(self, name, position, imgs, resource_limit, rate,
-      resource_distance=1):
-      super(Blacksmith, self).__init__(name, position, imgs)
-      self.resource_limit = resource_limit
-      self.resource_count = 0
-      self.rate = rate
+class Blacksmith(ResourceHolder):
+   def __init__(self, name, position, imgs, resource_limit, rate, resource_distance=1):
+      super(Blacksmith, self).__init__(name, position, imgs, rate, resource_limit, 0, 0)
       self.resource_distance = resource_distance
-
-   def get_rate(self):
-      return self.rate
 
    def get_resource_distance(self):
       return self.resource_distance
-      
-   def get_resource_count(self):
-      return self.resource_count
-
-   def set_resource_count(self, n):
-      self.resource_count = n
-      
-   def get_resource_limit(self):
-      return self.resource_limit
 
    def entity_string(self):
       return ' '.join(['blacksmith', self.name, str(self.position.x),
@@ -259,17 +243,9 @@ class Obstacle(Entity):
       return ' '.join(['obstacle', self.name, str(self.position.x),
          str(self.position.y)])
 
-class OreBlob(Pending_Actions):
+class OreBlob(Animated):
    def __init__(self, name, position, rate, imgs, animation_rate):
-      super(OreBlob, self).__init__(name, position, imgs)
-      self.rate = rate
-      self.animation_rate = animation_rate
-
-   def get_rate(self):
-      return self.rate
-
-   def get_animation_rate(self):
-      return self.animation_rate
+      super(OreBlob, self).__init__(name, position, imgs, rate, animation_rate)
       
    def blob_next_position(self, world, dest_pt):
       horiz = sign(dest_pt.x - self.position.x)
@@ -322,13 +298,9 @@ class OreBlob(Pending_Actions):
          return tiles
       return action
       
-class Quake(Pending_Actions):
+class Quake(Animated):
    def __init__(self, name, position, imgs, animation_rate):
-      super(Quake, self).__init__(name, position, imgs)
-      self.animation_rate = animation_rate
-
-   def get_animation_rate(self):
-      return self.animation_rate
+      super(Quake, self).__init__(name, position, imgs, 0, animation_rate)
 
       
       
