@@ -1,27 +1,6 @@
 import point
 import actions
 
-class Background:
-   def __init__(self, name, imgs):
-      self.name = name
-      self.imgs = imgs
-      self.current_img = 0
-      
-   def get_name(self):
-      return self.name
-      
-   def get_images(self):
-      return self.imgs
-
-   def get_image(self):
-      return self.imgs[self.current_img]
-      
-   def next_image(self):
-      self.current_img = (self.current_img + 1) % len(self.imgs)
-
-   def entity_string(self):
-      return 'unknown'
-      
 class Entity(object):
    def __init__(self, name, position, imgs):
       self.name = name
@@ -49,7 +28,13 @@ class Entity(object):
    
    def entity_string(self):
       return 'unknown'
-      
+
+BACKGROUND_POINT = point.Point(0, 0)
+class Background(Entity):
+   def __init__(self, name, imgs):
+      super(Background, self).__init__(name, BACKGROUND_POINT, imgs)
+
+
 class Pending_Actions(Entity):
    def __init__(self, name, position, imgs):
       super(Pending_Actions, self).__init__(name, position, imgs)
@@ -60,7 +45,6 @@ class Pending_Actions(Entity):
 
    def add_pending_action(self, action):
       self.pending_actions.append(action)
-
 
    def get_pending_actions(self):
       return self.pending_actions
