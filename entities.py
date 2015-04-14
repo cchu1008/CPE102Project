@@ -46,6 +46,9 @@ class Entity(object):
       
    def next_image(self):
       self.current_img = (self.current_img + 1) % len(self.imgs)
+   
+   def entity_string(self):
+      return 'unknown'
       
 class Pending_Actions(Entity):
    def __init__(self, name, position, imgs):
@@ -146,9 +149,6 @@ class MinerFull(Miner):
       animation_rate):
       super(MinerFull, self).__init__(name, resource_limit, position, rate, imgs, animation_rate)
       self.resource_count = 2
-      
-   def entity_string(self):
-      return 'unknown'
       
    def miner_to_smith(self, world, smith):
       entity_pt = self.position
@@ -286,9 +286,6 @@ class OreBlob(Pending_Actions):
 
    def get_animation_rate(self):
       return self.animation_rate
-
-   def entity_string(self):
-      return 'unknown'
       
    def blob_next_position(self, world, dest_pt):
       horiz = sign(dest_pt.x - self.position.x)
@@ -349,8 +346,6 @@ class Quake(Pending_Actions):
    def get_animation_rate(self):
       return self.animation_rate
 
-   def entity_string(self):
-      return 'unknown'
       
       
 def try_transform_miner_full(world, entity):
